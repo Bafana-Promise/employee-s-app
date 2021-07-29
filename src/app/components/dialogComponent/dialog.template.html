@@ -1,0 +1,57 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center" [fxShow]="true" [fxHide]="false" fxFill>
+  <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+    <mat-card>
+      <mat-card-title align="center">Add User</mat-card-title>
+
+      <mat-card-subtitle align="center">Fill in your Details</mat-card-subtitle>
+
+      <mat-card-content>
+        <form [formGroup]="registerForm">
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <mat-form-field [appearance]="&apos;outline&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+              <input matInput placeholder="First Name" [required]="false" formControlName="firstName" [value]="fisrtLettertoUpperCase(registerForm.value.firstName)">
+              <mat-error align="start" *ngIf="registerForm.get(&apos;firstName&apos;).touched &amp;&amp; registerForm.get(&apos;firstName&apos;).hasError(&apos;required&apos;)">First name is Required</mat-error>
+              <mat-error align="start" *ngIf="registerForm.get(&apos;firstName&apos;).touched &amp;&amp; registerForm.get(&apos;firstName&apos;).hasError(&apos;pattern&apos;)">First name should only contain letters</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <mat-form-field [appearance]="&apos;outline&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+              <input matInput placeholder="Last Name" [required]="false" formControlName="lastName" [value]="fisrtLettertoUpperCase(registerForm.value.lastName)">
+              <mat-error align="start" *ngIf="registerForm.get(&apos;lastName&apos;).touched &amp;&amp; registerForm.get(&apos;lastName&apos;).hasError(&apos;required&apos;)">Last name is Required</mat-error>
+              <mat-error align="start" *ngIf="registerForm.get(&apos;lastName&apos;).touched &amp;&amp; registerForm.get(&apos;lastName&apos;).hasError(&apos;pattern&apos;)">Last name should only contain letters</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <mat-form-field [appearance]="&apos;outline&apos;" [floatLabel]="&apos;auto&apos;">
+              <mat-select formControlName="role" placeholder="Select" [required]="true" (click)="dropdown()">
+                <ng-template ngFor let-option [ngForOf]="roles" let-i="index">
+                  <mat-option [value]="option">{{option.role}}</mat-option>
+                </ng-template>
+              </mat-select>
+
+            </mat-form-field>
+          </div>
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <mat-form-field [appearance]="&apos;outline&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+              <input matInput type="email" placeholder="Email" [required]="false" formControlName="email">
+              <mat-error align="start" *ngIf="registerForm.get(&apos;email&apos;).touched &amp;&amp; registerForm.get(&apos;email&apos;).hasError(&apos;required&apos;)">Email is Required</mat-error>
+              <mat-error align="start" *ngIf="registerForm.get(&apos;email&apos;).touched &amp;&amp; registerForm.get(&apos;email&apos;).hasError(&apos;email&apos;)">Invalid email address</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <mat-form-field [appearance]="&apos;outline&apos;" [floatLabel]="&apos;auto&apos;" [hideRequiredMarker]="false">
+              <input matInput type="password" placeholder="Passsword" [required]="false" formControlName="password">
+              <mat-error align="start" *ngIf="registerForm.get(&apos;password&apos;).touched &amp;&amp; registerForm.get(&apos;password&apos;).hasError(&apos;required&apos;)">Password is Required</mat-error>
+              <mat-error align="start" *ngIf="registerForm.get(&apos;password&apos;).touched &amp;&amp; registerForm.get(&apos;password&apos;).hasError(&apos;pattern&apos;)">Password should be alphanumeric</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+            <div fxLayout="row wrap" fxLayoutGap="12px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false"><button mat-raised-button [mat-dialog-close]="registerForm.value" *ngIf="!data.bool" color="primary" (click)="update(registerForm)" [disabled]="registerForm.invalid">Update</button><button mat-raised-button [mat-dialog-close]="registerForm.value" *ngIf="data.bool" color="primary" (click)="registerUser(registerForm)" [disabled]="registerForm.invalid">Add User</button><button mat-raised-button mat-dialog-close color="warn">Cancel</button><button mat-raised-button (click)="dropdown()">Raised Button</button></div>
+          </div>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions></mat-card-actions>
+    </mat-card>
+  </div>
+</div>

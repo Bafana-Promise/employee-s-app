@@ -1,0 +1,54 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false" fxFill>
+  <div fxLayout="column wrap" fxFlex="100" fxLayoutGap="15px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+    <div fxLayout="row wrap" class="toolBarcolor" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+      <div fxLayout="row wrap" class="toolBarcolorleft relative" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+        <h1>
+          <span class="iconCusor" (click)="refreshPage()">Employee&apos;s App</span>
+        </h1>
+      </div>
+      <div fxLayout="row wrap" class="toolBarcolorright relative" fxLayoutGap="15px" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+        <h3>
+          <span routerLink="/landingpage" routerLinkActive="active" class="signUpLoginCusor">Employee</span>
+        </h3>
+        <h3>
+          <span routerLink="/admin" routerLinkActive="active" class="signUpLoginCusor">Admin</span>
+        </h3>
+        <h3>
+          <span routerLink="/superadmin" routerLinkActive="active" class="signUpLoginCusor">SuperAdmin</span>
+        </h3>
+      </div>
+    </div>
+    <div fxLayout="column wrap" fxLayoutAlign="start end" [fxShow]="true" [fxHide]="false">
+      <div class="userNametextContainer">
+        <h1>You&apos;re Log In As {{ user.firstName }} </h1>
+      </div>
+    </div>
+    <div fxLayout="column wrap" class="btncontainer" fxLayoutAlign="start end" [fxShow]="true" [fxHide]="false"><button mat-raised-button color="warn" (click)="logout()">Log Out</button></div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+      <div fxLayout="column wrap" class="toolBarcolorleft relative" fxLayoutGap="12px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+        <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false"><img [src]="getImgContent()" class="imgBorderRadius"></div>
+        <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+          <form [formGroup]="uploadImg">
+            <div fxLayout="column wrap" fxLayoutGap="12px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+              <div>
+                <input type="file" id="img" name="img" placeholder="Choose File" accept="image/*" formControlName="img" (change)="onSelectedNewFile($event.target?.files)">
+              </div><button mat-raised-button color="primary" (click)="upLoadImg()">Update Profile</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div fxLayout="column wrap" class="toolBarcolorright relative" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+        <h1>
+          {{user.firstName}}
+        </h1>
+        <h1>
+          {{user.lastName}}
+        </h1>
+        <h1>
+          {{user.email}}
+        </h1>
+        <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false"><button mat-raised-button (click)="employeeUpdate(registerForm)">Update Form</button></div>
+      </div>
+    </div>
+  </div>
+</div>

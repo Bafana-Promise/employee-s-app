@@ -1,0 +1,66 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false" fxFill>
+  <div fxLayout="column wrap" fxFlex="100" fxLayoutGap="12px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+    <div fxLayout="row wrap" class="toolBarcolor" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+      <div fxLayout="row wrap" class="toolBarcolorleft relative" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+        <h1>
+          <span class="iconCusor" (click)="refreshPage()">Employee&apos;s App</span>
+        </h1>
+      </div>
+      <div fxLayout="row wrap" class="toolBarcolorright relative" fxLayoutGap="15px" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+        <h3>
+          <span routerLink="/landingpage" routerLinkActive="active" class="signUpLoginCusor">Employee</span>
+        </h3>
+        <h3>
+          <span routerLink="/admin" routerLinkActive="active" class="signUpLoginCusor">Admin</span>
+        </h3>
+        <h3>
+          <span routerLink="/superadmin" routerLinkActive="active" class="signUpLoginCusor">SuperAdmin</span>
+        </h3>
+      </div>
+    </div>
+    <div fxLayout="column wrap" fxLayoutAlign="start end" [fxShow]="true" [fxHide]="false">
+      <div class="userNametextContainer">
+        <h2>Welcome <span>{{ admin.firstName }} {{ admin.lastName }}</span> super Admin </h2>
+      </div>
+    </div>
+    <div fxLayout="column wrap" fxLayoutGap="15px" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+      <div fxLayout="row wrap" fxLayoutGap="12px" fxLayoutAlign="end stretch" [fxShow]="true" [fxHide]="false">
+        <div fxLayout="column wrap" class="btncontainer" fxLayoutAlign="start end" [fxShow]="true" [fxHide]="false"><button mat-raised-button color="primary" (click)="openRegDialog()">Add</button></div>
+        <div fxLayout="column wrap" class="btncontainer" fxLayoutAlign="start end" [fxShow]="true" [fxHide]="false"><button mat-raised-button color="warn" (click)="logout()">Log Out</button></div>
+      </div>
+      <div fxLayout="column wrap" fxLayoutAlign="start stretch" [fxShow]="true" [fxHide]="false">
+        <div fxLayout="column" class="tableContainer">
+          <table mat-table [dataSource]="users" class="table-width-fix">
+
+            <tr mat-row *matRowDef="let row; columns: [&apos;firstName&apos;,&apos;lastName&apos;,&apos;email&apos;,&apos;bd1787e6-2332-c1ac-8904-3d4739395203&apos;];"></tr>
+
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef>name</th>
+              <td mat-cell *matCellDef="let table; let i = index;">{{table.firstName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef>surname</th>
+              <td mat-cell *matCellDef="let table; let i = index;">{{table.lastName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>email</th>
+              <td mat-cell *matCellDef="let table; let i = index;">{{table.email}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="bd1787e6-2332-c1ac-8904-3d4739395203">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let table; let i = index;">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center" [fxShow]="true" [fxHide]="false">
+                  <mat-icon class="iconCusor" (click)="deleteUser(table._id)" color="warn">delete</mat-icon>
+                  <mat-icon class="iconCusor" (click)="edit(table)" color="primary">edit</mat-icon>
+                </div>
+              </td>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

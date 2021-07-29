@@ -1,0 +1,70 @@
+/*Importing default angular material css theme. */
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "nDefaults.scss";
+
+body{
+    font-family: Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+$backGroungColorBlue: #f5f5f5; 
+
+.cusor{
+    color: blue;
+    cursor: pointer;
+}
+.toolBarcolor{
+    background-color: #343a40;
+    color: $backGroungColorBlue;
+}
+.toolBarcolorleft{
+    left: 54px;
+    font-weight: 600;
+}
+.toolBarcolorright{
+    right: 54px;
+}
+.iconCusor{
+    cursor: pointer;
+}
+
+.signUpLoginCusor{
+    cursor: pointer;
+}
+.signUpLoginCusor:hover{
+    color: white;
+}
+
+.cardContainerRegLog{
+    width: 146%;
+}
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.HeaderIconReg{
+    width: 66px;
+    height: 66px;
+    top: 91px;
+    left: 645px;
+}
+
+.userNametextContainer{
+    position: relative;
+    right: 49px;
+}
+.btncontainer{
+    position: relative;
+    right: 39px;
+}
+.tableContainer{
+    padding: 54px;
+}
+
+.imgBorderRadius{
+    height: 320px;
+    border-radius: 50%;
+    width: 320px;
+}
