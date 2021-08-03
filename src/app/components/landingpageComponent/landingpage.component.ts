@@ -33,9 +33,11 @@ export class landingpageComponent extends NBaseComponent implements OnInit {
     uploadedUserImg
     fileSelected?: Blob;
     base64: string = "";
-    imageUrl: string;
+    imageUrl: any;
     users: any[] = [];
     imageChanged: boolean = false;
+    showAddUser:boolean = false;
+    updatedUser: any={};
     constructor(private commonservice: commonService, private router: Router, private matsnackbar: MatSnackBar, private dialog: MatDialog, public sanitizer: DomSanitizer, private fb: FormBuilder, private regLogService: regLog) {
         super();
         this.buildForm();
@@ -65,22 +67,24 @@ export class landingpageComponent extends NBaseComponent implements OnInit {
     };
 
 
-employeeUpdate(user) {
+employeeUpdate() {
 
         console.log(this.showAddUser)
         this.dialog.open(dialogComponent, {
             width: '390px', data: {
-                userDetails: user,
+                userDetails: this.user,
                 bool: this.showAddUser
             }
         }
         ).afterClosed().subscribe(result => {
             if (result) {
-                result['_id'] = user['_id']
+                result['_id'] = this.user['_id']
                 console.log(result)
                 this.regLogService.updateUser(result).then(res => {
                     console.log(res);
                     this.getUsers();
+                    sessionStorage.setItem("user", JSON.stringify(result));
+                    this.user = this.commonservice.getperson();
                     this.matsnackbar.open("User Updated Successfully", "Close", {
                         duration: 2500
                     });
@@ -124,7 +128,7 @@ employeeUpdate(user) {
         }
     }
 
-    onSelectedNewFile(files: fileList): void {
+    onSelectedNewFile(files): void {
         this.fileSelected = files[0];
         this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected));
         this.imageChanged = true;
@@ -152,22 +156,6 @@ employeeUpdate(user) {
      }
         
     }
-
-    // convertImgToBase64($event): void {
-    //     this.readFile($event.target);
-    //     console.log(this.readFile($event.target));
-    // }
-
-    // readFile(inputValue: any): void {
-    //     let file: File = inputValue.files[0];
-    //     let myReader: FileReader = new FileReader();
-
-    //     myReader.onloadend = e => {
-    //         this.imagePath = myReader.result;
-    //         console.log(myReader.result);
-    //     };
-    //     myReader.readAsDataURL(file);
-    // }
 
    
 

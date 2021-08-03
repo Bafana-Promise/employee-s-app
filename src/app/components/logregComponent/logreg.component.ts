@@ -5,6 +5,7 @@ import { regLog } from 'app/sd-services/regLog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { commonService } from 'app/services/common/common.service';
 
 /*
 Client Service import Example:
@@ -41,9 +42,11 @@ export class logregComponent extends NBaseComponent implements OnInit {
         id: "s",
         role: "Super Admin"
     }];
-    loggedUSer: any = {}
+    loggedUSer: any = {};
 
-    constructor(private regLogService: regLog, private fb: FormBuilder, private matsnackbar: MatSnackBar, private router: Router) {
+    loginUSer: any[] = [];
+
+    constructor(private regLogService: regLog, private fb: FormBuilder, private matsnackbar: MatSnackBar, private router: Router, private common: commonService) {
         super();
         this.buildForm();
         this.buildFormlog();
@@ -51,6 +54,9 @@ export class logregComponent extends NBaseComponent implements OnInit {
 
     ngOnInit() {
         this.getUsers()
+        if(this.common.getperson()){
+            this.router.navigate(['landingpage']);
+        }
 
     }
 
@@ -59,12 +65,11 @@ export class logregComponent extends NBaseComponent implements OnInit {
     }
 
     registerUser(form) {
-        console.log(form.value)
         if (form.valid) {
 
             this.regLogService.registerUser(form.value).then(res => {
                 this.showLogin = false;
-                this.getUsers()
+                this.getUsers();
                 this.matsnackbar.open("User Registered Successfully", "Close", {
                     duration: 2500
                 });
@@ -86,44 +91,51 @@ export class logregComponent extends NBaseComponent implements OnInit {
             firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
             lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
             role: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required,Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
             password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z0-9])(?!.*[!\-`~() +=<>])(?=.*[@#$%^&*/]).{6,12}$/)]],
-            img:['']
+            img: ['']
         })
     }
 
     login(form) {
-        console.log(form.value)
-        this.users.forEach(user => {
-            if (form.value.email == user.email && form.value.password == user.password) {
+        this.regLogService.getLoginUser(form.value).then(res => {
+            this.loginUSer = res.local.result;
+            console.log(this.loginUSer[0]);
+            if(this.loginUSer.length == 0){  
+                console.log("I ran Dude");
+                   this.matsnackbar.open("Incorrect credentials", "Close", {
+                    duration: 4500
+                })
+                return
+                }
+            if (form.value.email == this.loginUSer[0].email && form.value.password == this.loginUSer[0].password) {
                 this.foundUser = true;
-                this.loggedUSer = user;
+                this.loggedUSer = this.loginUSer[0];
                 console.log(this.loggedUSer)
-                sessionStorage.setItem("user", JSON.stringify(user))
+                sessionStorage.setItem("user", JSON.stringify(this.loginUSer[0]))
             }
-        })
-        if (this.foundUser) {
-            if (this.loggedUSer.role.role.includes("ad")) {
-                this.router.navigate(["admin"]);
-                console.log("hello")
+            if (this.foundUser) {
+                if (this.loggedUSer.role.role.includes("ad")) {
+                    this.router.navigate(["admin"]);
+                    console.log("hello")
+
+                }
+                else if (this.loggedUSer.role.role.includes("Super")) {
+                    this.router.navigate(["superadmin"]);
+                    console.log("hi")
+                } else {
+                    this.router.navigate(["landingpage"]);
+                    console.log("ola")
+                }
 
             }
-            else if (this.loggedUSer.role.role.includes("Super")) {
-                this.router.navigate(["superadmin"]);
-                console.log("hi")
-            } else {
-
-
-                this.router.navigate(["landingpage"]);
-                console.log("ola")
+            if (this.loginUSer == undefined) {
+                this.matsnackbar.open("Incorrect credentials", "Close", {
+                    duration: 4500
+                })
             }
+        });
 
-        }
-        if (!this.foundUser) {
-            this.matsnackbar.open("INcorrect credentials", "Close", {
-                duration: 4500
-            })
-        }
     }
 
     buildFormlog() {

@@ -100,6 +100,6 @@ commonService,
 */
 
 // CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY_START
-export const appRoutes = [{path: 'logreg', component: logregComponent},{path: 'landingpage', component: landingpageComponent},{path: 'admin', component: adminComponent, canActivate: [roleService],
-children: [{path: 'home', component: landingpageComponent}]},{path: 'superadmin', component: superadminComponent, canActivate: [rolesuperadminService]},{path: 'dialog', component: dialogComponent},{path: '', redirectTo: 'logreg', pathMatch: 'full'},{path: '**', component: PageNotFoundComponent}]
+export const appRoutes = [{path: 'logreg', component: logregComponent},{path: 'landingpage', component: landingpageComponent},{path: 'admin', component: superadminComponent, canActivate: [roleService],
+children: [{path: 'home', component: superadminComponent}]},{path: 'superadmin', component: superadminComponent, canActivate: [rolesuperadminService]},{path: 'dialog', component: dialogComponent},{path: '', redirectTo: 'logreg', pathMatch: 'full'},{path: '**', component: PageNotFoundComponent}]
 // CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY_END

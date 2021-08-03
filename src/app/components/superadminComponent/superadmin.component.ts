@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { regLog } from 'app/sd-services/regLog';
 import { dialogComponent } from '../dialogComponent/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 /*
 Client Service import Example:
@@ -28,7 +29,7 @@ export class superadminComponent extends NBaseComponent implements OnInit {
     admin: any = {};
     users: any[] = [];
     showAddUser: boolean = false;
-    constructor(private commonservice: commonService, private router: Router, private matsnackbar: MatSnackBar, private regLogService: regLog, private dialog: MatDialog) {
+    constructor(private commonservice: commonService, private router: Router, private matsnackbar: MatSnackBar, private regLogService: regLog, private dialog: MatDialog, public sanitizer: DomSanitizer) {
         super();
     }
 
@@ -60,7 +61,8 @@ export class superadminComponent extends NBaseComponent implements OnInit {
         console.log(this.showAddUser)
         this.dialog.open(dialogComponent, {
             width: '390px', data: {
-                bool: this.showAddUser
+                bool: this.showAddUser,
+                title: 'Add User'
             }
         }
         ).afterClosed().subscribe(result => {
@@ -91,7 +93,8 @@ export class superadminComponent extends NBaseComponent implements OnInit {
         this.dialog.open(dialogComponent, {
             width: '390px', data: {
                 userDetails: user,
-                bool: this.showAddUser
+                bool: this.showAddUser,
+                title: 'Edit User'
             }
         }
         ).afterClosed().subscribe(result => {
@@ -135,6 +138,20 @@ export class superadminComponent extends NBaseComponent implements OnInit {
                 duration: 2500
             });
         })
+    }
+
+    
+
+ getImgContent(): SafeUrl {
+     if(this.imageChanged){
+         return this.imageUrl;
+     }
+     else if(this['admin']['img']){
+         return this.sanitizer.bypassSecurityTrustUrl(this['admin']['img']);
+     } else{
+         return 'assets/Web/Icons/dummyImage.jpg'
+     }
+        
     }
 
 

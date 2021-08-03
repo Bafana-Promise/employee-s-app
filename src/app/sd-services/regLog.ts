@@ -140,6 +140,33 @@ export class regLog {
     }
   }
 
+  async getLoginUser(form: any = undefined, ...others) {
+    try {
+      var bh = {
+        input: {
+          form: form,
+        },
+        local: {
+          result: undefined,
+        },
+      };
+      bh = this.sdService.__constructDefault(bh);
+      bh = await this.sd_2JeMDgJzfFXGSkay(bh);
+      //appendnew_next_getLoginUser
+      return (
+        // formatting output variables
+        {
+          input: {},
+          local: {
+            result: bh.local.result,
+          },
+        }
+      );
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_apiFHHR1GeW0UMwt');
+    }
+  }
+
   //appendnew_flow_regLog_start
 
   async sd_nE1xK28ZAbZT0lB3(bh) {
@@ -278,6 +305,41 @@ export class regLog {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_qWZLFjourcvQP6Xm');
+    }
+  }
+
+  async sd_2JeMDgJzfFXGSkay(bh) {
+    try {
+      console.log(bh);
+      bh = await this.sd_GayXW0KTvwtvUg7K(bh);
+      //appendnew_next_sd_2JeMDgJzfFXGSkay
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_2JeMDgJzfFXGSkay');
+    }
+  }
+
+  async sd_GayXW0KTvwtvUg7K(bh) {
+    try {
+      let basePath = bh.system.environment.properties.ssdURL.endsWith('/')
+        ? bh.system.environment.properties.ssdURL
+        : bh.system.environment.properties.ssdURL + '/';
+      let url = `loginUsers/`;
+      let finalUrl = basePath + url;
+      let requestOptions = {
+        url: finalUrl,
+        method: 'post',
+        responseType: 'json',
+        reportProgress: undefined,
+        headers: {},
+        params: {},
+        body: bh.input.form,
+      };
+      bh.local.result = await this.sdService.nHttpRequest(requestOptions);
+      //appendnew_next_sd_GayXW0KTvwtvUg7K
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_GayXW0KTvwtvUg7K');
     }
   }
 

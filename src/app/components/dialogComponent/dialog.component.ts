@@ -36,7 +36,7 @@ export class dialogComponent extends NBaseComponent implements OnInit {
         id: "s",
         role:"Super Admin"
     }];
-
+    isEmployee: boolean = false;
     constructor(public dialogRef: MatDialogRef<dialogComponent>, private fb: FormBuilder,
         private matsnackbar: MatSnackBar, private commonservice: commonService, private router: Router, @Inject(MAT_DIALOG_DATA) public data: any) {
         super();
@@ -79,17 +79,11 @@ update(form){
 }
 
 patchUser(){
-    let userRole;
-    this.roles.forEach(obj => {
-    if(this.data.role.id == obj.role.id){
-        userRole = obj;
-    }
-    });
-    // this.roles = [this.data.userDetails.role]
+     const toSelect = this.roles.find(obj => obj.id == this.data.userDetails.role.id);
+      this.registerForm.get('role').patchValue(toSelect);
     this.registerForm.patchValue({
             firstName: this.data.userDetails.firstName,
             lastName: this.data.userDetails.lastName,
-            role:[userRole],
             email: this.data.userDetails.email,
             password: this.data.userDetails.password,
             img: this.data.userDetails.img      
@@ -109,15 +103,17 @@ buildForm(){
         })
     }
 
-fisrtLettertoUpperCase(str){
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 dropdown(){
     this.roles;
     this.roles.forEach(role => {
     console.log(role.role);
     });
+}
+
+disableRole(){
+    if(this.data.role.id == "e"){
+        this.isEmployee = true;
+    }
 }
 
 

@@ -10,16 +10,23 @@ export class rolesuperadminService implements CanActivate{
       constructor(private common: commonService, private router: Router,private matsnackbar: MatSnackBar){}
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       let user = this.common.getperson();
-      if(user.role.role.includes('Super Admin')){
-        return true;
-      } else {
-          
-        this.matsnackbar.open("You're not authorised to this page", 'Close', {
+        if (user) {
+            if (user.role.id.includes('s')) {
+                return true;
+            }
+            else {
+                this.matsnackbar.open("You're not authorised to this page", 'Close', {
+                    duration: 4500
+                });
+                this.router.navigate(['landingpage']);
+                return false;
+            }
+        } else if (!user) {
+            this.matsnackbar.open("You're not Logged In", 'Close', {
                 duration: 4500
-        });
-        this.router.navigate(['logreg']);
-        return false;
-      }
+            });
+            this.router.navigate(['logreg']);
+        }
   }
 
 }
